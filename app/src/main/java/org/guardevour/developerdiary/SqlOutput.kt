@@ -45,7 +45,7 @@ suspend fun getSqlFromProject(context: Context, projectId: Int): String = corout
             val tableAndField = relation.foreignFieldName.split(" ")
             resultString += "FOREIGN KEY (${relation.fieldName}) REFERENCES ${tableAndField[0]} (${tableAndField[1]})"
         }
-        resultString += ") \n"
+        resultString += ")\n"
     }
 
 
