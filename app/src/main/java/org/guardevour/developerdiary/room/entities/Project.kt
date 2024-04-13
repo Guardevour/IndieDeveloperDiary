@@ -46,8 +46,8 @@ data class Project(
                 }
                 .padding(5.dp)
                 .height(100.dp)
-                .width(100.dp).background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(12.dp))
-                .border(5.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(10.dp))
+                .width(100.dp).background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(12.dp))
+
         ) {
             Text(text = name)
         }

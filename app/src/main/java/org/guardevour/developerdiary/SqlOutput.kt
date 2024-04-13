@@ -27,7 +27,7 @@ suspend fun getSqlFromProject(context: Context, projectId: Int): String = corout
     val tables = dao.getAllTables(projectId)
 
     for (table in tables){
-        resultString += "CREATE TABLE ${table.name}( \n"
+        resultString += "CREATE TABLE ${table.name.split(' ').joinToString("_")}( \n"
         val fields = dao.getAllFields(table.uid)
         val relations = dao.getAllRelations(
             fields.map {

@@ -63,7 +63,7 @@ fun CheckBox(
                 .background(
                     if (!value.value)
                         MaterialTheme.colorScheme.background
-                    else MaterialTheme.colorScheme.tertiary, RoundedCornerShape(30)
+                    else MaterialTheme.colorScheme.primary, RoundedCornerShape(30)
                 )
         ) {
             Icon(

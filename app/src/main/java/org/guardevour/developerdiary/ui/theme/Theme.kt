@@ -18,27 +18,27 @@ import androidx.core.view.WindowCompat
 import org.guardevour.developerdiary.screens.Module
 
 private val DarkColorScheme = darkColorScheme(
-    primary =  Color(0xFF343C4E),
-    secondary = Color(0xFF586870),
-    tertiary = Color(0xFF909DB1),
+    primary =  Color(0xffaac7ff),
+    secondary = Color(0xffbec6dc),
+    tertiary = Color(0xffddbce0),
     background = Color(0xFF313846),
-    surface =Color(0xFF313846),
-    onPrimary = Color(0xFFFFFBFE),
-    onSecondary = Color(0xFFFFFBFE),
-    onTertiary = Color(0xFFB3B6B9),
+    surface =Color(0xFF111318),
+    onPrimary = Color(0xff0a305f),
+    onSecondary = Color(0xFF283141),
+    onTertiary = Color(0xFF3f2844),
     onBackground = Color(0xFFFFFBFE),
     onSurface = Color(0xFFFFFBFE),
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF999EAA),
-    secondary = Color(0xFF8DB2BB),
-    tertiary = Color(0xFFBFD4F3),
+    primary = Color(0xFF415f91),
+    secondary = Color(0xFF565f71),
+    tertiary = Color(0xFF705575),
     background = Color(0xFFDFD9DD),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color(0xDA0F1213),
-    onSecondary = Color(0xFF0F1013),
-    onTertiary = Color(0xFF0F1013),
+    surface = Color(0xFFf9f9ff),
+    onPrimary = Color(0xFFffffff),
+    onSecondary = Color(0xFFffffff),
+    onTertiary = Color(0xFFffffff),
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F)
 

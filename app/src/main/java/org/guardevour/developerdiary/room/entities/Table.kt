@@ -136,7 +136,23 @@ data class Table(
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 items(relations.size){index->
-                    Text(text = relations[index].toString())
+                    val isDeleteDialogOpen = remember {
+                        mutableStateOf(false)
+                    }
+
+                    Text(text = relations[index].toString(), modifier = Modifier.combinedClickable(
+                        MutableInteractionSource(),
+                        indication = null,
+                        onClick = {},
+                        onLongClick = {
+                            isDeleteDialogOpen.value = true
+                        }
+                    ))
+
+                    if (isDeleteDialogOpen.value)
+                        DeleteDialog(value = isDeleteDialogOpen, entity = relations[index], name = "relation", additionalOnClick = {
+                            relations.remove(relations[index])
+                        })
                 }
                 item {
                     Icon(imageVector = Icons.Filled.Add, contentDescription = "", modifier = Modifier
@@ -145,9 +161,14 @@ data class Table(
                         .alpha(0.75f)
                         .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(12.dp))
                         .border(5.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(10.dp))
-                        .clickable {
-                            isNewRelationDialogOpen.value = true
-                        }
+                        .combinedClickable(
+                            MutableInteractionSource(),
+                            indication = null,
+                            onClick = {},
+                            onLongClick = {
+                                isNewRelationDialogOpen.value = true
+                            }
+                        )
                     )
                     if (isNewRelationDialogOpen.value){
                         NewRelationDialog(value = isNewRelationDialogOpen, this@Table, relations)
@@ -175,7 +196,7 @@ data class Table(
                 .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(12.dp))
                 .border(5.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(10.dp))
         ) {
-            Text(text = name, textAlign = TextAlign.Center)
+            Text(text = name, textAlign = TextAlign.Center, fontSize = 12.sp)
         }
     }
 

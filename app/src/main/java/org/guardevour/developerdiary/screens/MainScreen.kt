@@ -83,8 +83,7 @@ fun MainScreen(
                         .width(100.dp)
                         .padding(5.dp)
                         .alpha(0.75f)
-                        .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(12.dp))
-                        .border(5.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(10.dp))
+                        .background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(12.dp))
                         .clickable {
                             isOpenedAddDialog.value = true
                         }

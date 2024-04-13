@@ -13,6 +13,7 @@ import org.guardevour.developerdiary.room.entities.Project
 import org.guardevour.developerdiary.room.entities.Relation
 import org.guardevour.developerdiary.room.entities.Table
 import org.guardevour.developerdiary.room.entities.Tag
+import org.guardevour.developerdiary.room.entities.Task
 
 @Dao
 interface RoomDao {
@@ -27,6 +28,12 @@ interface RoomDao {
 
     @Delete
     fun delete(tag: Tag)
+
+    @Delete
+    fun delete(relation: Relation)
+
+    @Delete
+    fun delete(task: Task)
 
     @Insert
     fun newProject(project: Project)
@@ -96,4 +103,13 @@ interface RoomDao {
 
     @Query("Select * from relation where field_id in (:uids)")
     fun getAllRelations(uids: IntArray): List<Relation>
+
+    @Query("Select * from task where project_id = :prId")
+    fun getAllTasks(prId: Int): List<Task>
+
+    @Query("Select max(uid) from task")
+    fun getLastTask(): Int
+
+    @Insert
+    suspend fun addTask(task: Task)
 }

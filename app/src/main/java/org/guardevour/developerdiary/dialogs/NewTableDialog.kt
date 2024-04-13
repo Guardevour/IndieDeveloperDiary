@@ -62,6 +62,7 @@ fun NewTableDialog(
                        Text(text = "Name")
                    }
                )
+               Text(text = "*Better use spaces in name, in result SQL code they will be replaced by _", fontSize = 10.sp)
                val dao = getDatabase(LocalContext.current).Dao()
                Button(onClick = {
                        if (name.value != ""){

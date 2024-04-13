@@ -12,7 +12,8 @@ import org.guardevour.developerdiary.room.entities.*
                     Table::class,
                     Tag::class,
                     Field::class,
-                    Relation::class
+                    Relation::class,
+                    Task::class
                      ], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun Dao(): RoomDao

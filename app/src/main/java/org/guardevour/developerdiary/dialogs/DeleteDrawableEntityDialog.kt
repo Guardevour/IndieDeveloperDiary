@@ -26,8 +26,10 @@ import androidx.compose.ui.unit.sp
 import org.guardevour.developerdiary.room.entities.DrawableEntity
 import org.guardevour.developerdiary.room.entities.Field
 import org.guardevour.developerdiary.room.entities.Project
+import org.guardevour.developerdiary.room.entities.Relation
 import org.guardevour.developerdiary.room.entities.Table
 import org.guardevour.developerdiary.room.entities.Tag
+import org.guardevour.developerdiary.room.entities.Task
 import org.guardevour.developerdiary.room.getDatabase
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,14 +62,6 @@ fun DeleteDialog(
                     modifier = Modifier.offset(y = (-20).dp)
                 ) {
                     Button(onClick = {
-                        if (entity is Tag) {
-                            getDatabase(context).Dao().delete(entity)
-                            additionalOnClick()
-                        }
-                        if (entity is Table) {
-                            getDatabase(context).Dao().delete(entity)
-                            additionalOnClick()
-                        }
                         if (entity is Field) {
                             getDatabase(context).Dao().delete(entity)
                             additionalOnClick()
@@ -76,6 +70,27 @@ fun DeleteDialog(
                             getDatabase(context).Dao().delete(entity)
                             additionalOnClick()
                         }
+                        when (entity){
+                            is Tag ->{
+                                getDatabase(context).Dao().delete(entity)
+                            }
+                            is Table -> {
+                                getDatabase(context).Dao().delete(entity)
+                            }
+                            is Field -> {
+                                getDatabase(context).Dao().delete(entity)
+                            }
+                            is Project -> {
+                                getDatabase(context).Dao().delete(entity)
+                            }
+                            is Relation ->{
+                                getDatabase(context).Dao().delete(entity)
+                            }
+                            is Task ->{
+                                getDatabase(context).Dao().delete(entity)
+                            }
+                        }
+                        additionalOnClick()
                         value.value = false
                     }) {
                         Text(text = "Delete")

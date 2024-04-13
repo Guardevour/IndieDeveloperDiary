@@ -52,7 +52,7 @@ class MainActivity : FragmentActivity() {
                        isAuthEnabled = false
                        val navController = rememberNavController()
                        NavHost(navController = navController, startDestination = "main") {
-                           try {
+
                                composable("main") {
                                    MainScreen(
                                        navController
@@ -78,10 +78,7 @@ class MainActivity : FragmentActivity() {
                                        navController
                                    )
                                }
-                           }
-                           catch (ex: Exception){
 
-                           }
 
                        }
                    }
