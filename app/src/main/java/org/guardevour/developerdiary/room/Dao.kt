@@ -3,11 +3,8 @@ package org.guardevour.developerdiary.room
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Update
-import org.guardevour.developerdiary.room.entities.DrawableEntity
 import org.guardevour.developerdiary.room.entities.Field
 import org.guardevour.developerdiary.room.entities.Project
 import org.guardevour.developerdiary.room.entities.Relation

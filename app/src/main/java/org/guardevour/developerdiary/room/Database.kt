@@ -4,7 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import org.guardevour.developerdiary.room.entities.*
+import org.guardevour.developerdiary.room.entities.Field
+import org.guardevour.developerdiary.room.entities.Project
+import org.guardevour.developerdiary.room.entities.Relation
+import org.guardevour.developerdiary.room.entities.Table
+import org.guardevour.developerdiary.room.entities.Tag
+import org.guardevour.developerdiary.room.entities.Task
 
 @Database(entities = [Project::class,
                     Table::class,

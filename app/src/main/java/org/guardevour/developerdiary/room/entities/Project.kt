@@ -1,8 +1,6 @@
 package org.guardevour.developerdiary.room.entities
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -17,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.unit.dp
 import androidx.room.ColumnInfo
-import androidx.room.Database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.guardevour.developerdiary.DataBase
@@ -41,9 +38,7 @@ data class Project(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .composed {
-                    modifier
-                }
+                .then(modifier)
                 .padding(5.dp)
                 .height(100.dp)
                 .width(100.dp).background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(12.dp))

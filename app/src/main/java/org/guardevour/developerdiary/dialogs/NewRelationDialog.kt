@@ -30,9 +30,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.guardevour.developerdiary.room.getDatabase
 import org.guardevour.developerdiary.room.entities.Relation
 import org.guardevour.developerdiary.room.entities.Table
+import org.guardevour.developerdiary.room.getDatabase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

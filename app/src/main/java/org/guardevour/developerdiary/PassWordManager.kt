@@ -2,8 +2,6 @@ package org.guardevour.developerdiary
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import java.lang.Math.pow
-import kotlin.math.pow
 
 class PassWordManager(context: Context) {
     private val preferences = context.getSharedPreferences("AppPref", MODE_PRIVATE)
