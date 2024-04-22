@@ -1,5 +1,7 @@
 package org.guardevour.developerdiary
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,7 +30,6 @@ import org.guardevour.developerdiary.screens.Module
 import org.guardevour.developerdiary.screens.ProjectInfoScreen
 import org.guardevour.developerdiary.screens.ProjectScreen
 import org.guardevour.developerdiary.ui.theme.DeveloperDiaryTheme
-
 class MainActivity : FragmentActivity() {
 
     private var isAuthEnabled = true

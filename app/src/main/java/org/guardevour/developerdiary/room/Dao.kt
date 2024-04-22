@@ -112,4 +112,8 @@ interface RoomDao {
 
     @Insert
     suspend fun addTask(task: Task)
+
+    @Update
+    fun complete(task: Task)
+
 }

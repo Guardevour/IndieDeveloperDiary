@@ -10,13 +10,11 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -32,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -63,8 +60,8 @@ data class Table(
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     override fun Draw(modifier: Modifier) {
-        val fields = getDatabase(LocalContext.current).Dao().getAllFields(uid).toMutableStateList()
-        val relations = getDatabase(LocalContext.current).Dao().getAllRelations(
+        val fields = getDatabase(LocalContext.current).dao().getAllFields(uid).toMutableStateList()
+        val relations = getDatabase(LocalContext.current).dao().getAllRelations(
             fields.map{
                 it.uid
             }.toIntArray()
@@ -99,7 +96,7 @@ data class Table(
                         })
                 }
                 item {
-                    val dao = getDatabase(LocalContext.current).Dao()
+                    val dao = getDatabase(LocalContext.current).dao()
                     Icon(imageVector = Icons.Filled.Add, contentDescription = "", modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp)
@@ -161,13 +158,10 @@ data class Table(
                         .alpha(0.75f)
                         .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(12.dp))
                         .border(5.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(10.dp))
-                        .combinedClickable(
+                        .clickable(
                             MutableInteractionSource(),
                             indication = null,
-                            onClick = {},
-                            onLongClick = {
-                                isNewRelationDialogOpen.value = true
-                            }
+                            onClick = { isNewRelationDialogOpen.value = true}
                         )
                     )
                     if (isNewRelationDialogOpen.value){
@@ -202,8 +196,8 @@ data class Table(
 
     @Composable
     fun DrawVisual(modifier: Modifier = Modifier, isExpanded: MutableState<Boolean>){
-        val fields = getDatabase(LocalContext.current).Dao().getAllFields(uid)
-        val relations = getDatabase(LocalContext.current).Dao().getAllRelations(fields.map {
+        val fields = getDatabase(LocalContext.current).dao().getAllFields(uid)
+        val relations = getDatabase(LocalContext.current).dao().getAllRelations(fields.map {
             it.uid
             }.toIntArray()
         )

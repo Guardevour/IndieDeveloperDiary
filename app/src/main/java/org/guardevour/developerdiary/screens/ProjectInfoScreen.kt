@@ -1,12 +1,10 @@
 package org.guardevour.developerdiary.screens
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,15 +38,10 @@ import kotlinx.coroutines.launch
 import org.guardevour.developerdiary.DataBase
 import org.guardevour.developerdiary.components.CheckBox
 import org.guardevour.developerdiary.components.DataBaseComboBox
-import org.guardevour.developerdiary.createFileAndSave
 import org.guardevour.developerdiary.dialogs.DeleteDialog
 import org.guardevour.developerdiary.dialogs.NewTagDialog
-import org.guardevour.developerdiary.getSqlFromProject
-import org.guardevour.developerdiary.room.entities.Field
 import org.guardevour.developerdiary.room.entities.Project
-import org.guardevour.developerdiary.room.entities.Tag
 import org.guardevour.developerdiary.room.getDatabase
-import java.time.LocalDateTime
 
 @Composable
 fun ProjectInfoScreen(
@@ -60,7 +53,7 @@ fun ProjectInfoScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        val dao = getDatabase(LocalContext.current).Dao()
+        val dao = getDatabase(LocalContext.current).dao()
         val project = dao.getProjectByID(projectId)
         val isExpandedDBMS = remember {
             mutableStateOf(false)

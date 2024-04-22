@@ -1,19 +1,14 @@
 package org.guardevour.developerdiary.dialogs
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -21,13 +16,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.guardevour.developerdiary.room.entities.Project
 import org.guardevour.developerdiary.room.entities.Table
 import org.guardevour.developerdiary.room.getDatabase
 
@@ -63,7 +56,7 @@ fun NewTableDialog(
                    }
                )
                Text(text = "*Better use spaces in name, in result SQL code they will be replaced by _", fontSize = 10.sp)
-               val dao = getDatabase(LocalContext.current).Dao()
+               val dao = getDatabase(LocalContext.current).dao()
                Button(onClick = {
                        if (name.value != ""){
                            val table = Table(

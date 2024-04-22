@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -45,7 +45,7 @@ fun ProjectScreen(
     val currentPage = remember{
         mutableStateOf(Module.None)
     }
-    val modules = getDatabase(LocalContext.current).Dao().getProjectByID(projectId).initProjectModules(currentPage)
+    val modules = getDatabase(LocalContext.current).dao().getProjectByID(projectId).initProjectModules(currentPage)
     Scaffold(
         topBar = {
             Row(
@@ -63,7 +63,7 @@ fun ProjectScreen(
                         else -> Color(0xA6343C4E)
                     })) {
                 Icon(
-                    imageVector = Icons.Filled.Info,
+                    imageVector = Icons.Filled.Settings,
                     contentDescription = "",
                     modifier = Modifier.clickable {
                     navHostController.navigate("projectInfo/$projectId")

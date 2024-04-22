@@ -50,7 +50,7 @@ class Task(
     @ColumnInfo(name = "tag") val tag: String,
     @ColumnInfo(name = "difficulty") val difficulty: String,
     @ColumnInfo(name = "project_id") val prId: Int,
-    @ColumnInfo(name = "is_completed") val isCompleted: Boolean
+    @ColumnInfo(name = "is_completed") var isCompleted: Boolean
 ): DrawableEntity {
 
     @Composable
@@ -63,11 +63,8 @@ class Task(
                .height(if (isExpanded.value) 200.dp else 80.dp)
                .padding(5.dp)
                .taskWidth()
-               .composed {
-                   modifier
-               }
-               .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(10.dp))
-               .background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(10.dp))
+               .then(modifier)
+
        ) {
            Column(
                verticalArrangement =  Arrangement.Center,
@@ -96,7 +93,7 @@ class Task(
 
     @Composable
     override fun Draw(modifier: Modifier) {
-        TODO("Not yet implemented")
+        Text(name)
     }
 }
 

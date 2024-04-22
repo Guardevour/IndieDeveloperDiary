@@ -2,7 +2,6 @@ package org.guardevour.developerdiary.dialogs
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -40,7 +39,7 @@ import org.guardevour.developerdiary.room.entities.Table
 fun NewRelationDialog(value: MutableState<Boolean>, table: Table, relations: SnapshotStateList<Relation>) {
         AlertDialog(onDismissRequest = { value.value = false }) {
             Dialog {
-                val dao = getDatabase(LocalContext.current).Dao()
+                val dao = getDatabase(LocalContext.current).dao()
                 var expandedField by remember { mutableStateOf(false) }
                 var expandedForeignField by remember { mutableStateOf(false) }
                 val fields = dao.getAllFields(table.uid).toMutableStateList()

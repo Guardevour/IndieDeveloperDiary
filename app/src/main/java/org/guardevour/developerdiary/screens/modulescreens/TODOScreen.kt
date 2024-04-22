@@ -1,13 +1,23 @@
 package org.guardevour.developerdiary.screens.modulescreens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,8 +27,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
-import org.guardevour.developerdiary.dialogs.DeleteDialog
+import androidx.compose.ui.unit.dp
 import org.guardevour.developerdiary.dialogs.NewTaskDialog
 import org.guardevour.developerdiary.room.getDatabase
 
@@ -27,7 +38,7 @@ import org.guardevour.developerdiary.room.getDatabase
 fun TODOScreen(
     projectId: Int
 ) {
-    val dao = getDatabase(LocalContext.current).Dao()
+    val dao = getDatabase(LocalContext.current).dao()
     val tasks = dao.getAllTasks(projectId)
     val uncompletedTasks = tasks.filter {
         !it.isCompleted
@@ -52,21 +63,39 @@ fun TODOScreen(
                 val isExpanded = remember {
                     mutableStateOf(false)
                 }
-                val isDeleteDialogOpen = remember {
-                    mutableStateOf(false)
-                }
-                uncompletedTasks[it].DrawTask(modifier = Modifier.combinedClickable(
-                    MutableInteractionSource(),
-                    indication = null,
-                    onClick = {isExpanded.value = !isExpanded.value},
-                    onLongClick = {
-                        isDeleteDialogOpen.value = true
+                var isDeleted by remember{ mutableStateOf(true)}
+                AnimatedVisibility(visible = isDeleted) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.background(
+                            MaterialTheme.colorScheme.secondary,
+                            RoundedCornerShape(10.dp)
+                        )
+
+                    ) {
+                        IconButton(onClick = {
+                            uncompletedTasks[it].isCompleted = true
+                            dao.complete(uncompletedTasks[it])
+                            completedTasks.add(uncompletedTasks[it])
+                            uncompletedTasks.remove(uncompletedTasks[it])
+                        }) {
+                            Icon(imageVector = Icons.Filled.Check, contentDescription = "")
+                        }
+                        uncompletedTasks[it].DrawTask(modifier = Modifier.clickable(
+                            MutableInteractionSource(),
+                            indication = null,
+                            onClick = { isExpanded.value = !isExpanded.value }
+                        ),
+                            isExpanded
+                        )
+                        IconButton(onClick = {
+                            isDeleted = false
+                            dao.delete(uncompletedTasks[it])
+                            uncompletedTasks.remove(uncompletedTasks[it])
+                        }) {
+                            Icon(imageVector = Icons.Filled.Close, contentDescription = "")
+                        }
                     }
-                ),
-                    isExpanded
-                )
-                if (isDeleteDialogOpen.value){
-                    DeleteDialog(value = isDeleteDialogOpen, entity = uncompletedTasks[it], name = "task")
                 }
             }
 
@@ -77,22 +106,35 @@ fun TODOScreen(
                 val isExpanded = remember {
                     mutableStateOf(false)
                 }
-                val isDeleteDialogOpen = remember {
-                    mutableStateOf(false)
-                }
-                completedTasks[it].DrawTask(modifier = Modifier.combinedClickable(
-                    MutableInteractionSource(),
-                    indication = null,
-                    onClick = {isExpanded.value = !isExpanded.value},
-                    onLongClick = {
-                        isDeleteDialogOpen.value = true
+                var isDeleted by remember{ mutableStateOf(true)}
+                AnimatedVisibility(visible = isDeleted) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .background(
+                                MaterialTheme.colorScheme.primary,
+                                RoundedCornerShape(10.dp)
+                            )
+                            .alpha(0.6f)
+                    ) {
+                        Icon(imageVector = Icons.Filled.ThumbUp, contentDescription = "")
+                        completedTasks[it].DrawTask(modifier = Modifier.clickable(
+                            MutableInteractionSource(),
+                            indication = null,
+                            onClick = {isExpanded.value = !isExpanded.value}
+                        ),
+                            isExpanded
+                        )
+                        IconButton(onClick = {
+                            isDeleted = false
+                            dao.delete(completedTasks[it])
+                            completedTasks.remove(completedTasks[it])
+                        }) {
+                            Icon(imageVector = Icons.Filled.Close, contentDescription = "")
+                        }
                     }
-                ),
-                    isExpanded
-                )
-                if (isDeleteDialogOpen.value){
-                    DeleteDialog(value = isDeleteDialogOpen, entity = completedTasks[it], name = "task")
                 }
+
             }
         }
 

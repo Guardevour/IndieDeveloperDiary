@@ -25,7 +25,7 @@ import kotlin.math.roundToInt
 fun DataBaseVisualisationScreen(
     projectId: Int
 ) {
-    val dao =  getDatabase(LocalContext.current).Dao()
+    val dao =  getDatabase(LocalContext.current).dao()
     val tables = dao.getAllTables(projectId)
 
     val relations = dao.getAllRelations(

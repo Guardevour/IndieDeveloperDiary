@@ -2,16 +2,10 @@ package org.guardevour.developerdiary
 
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Bundle
 import android.os.Environment
-import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.widget.Toast
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.room.Room
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import org.guardevour.developerdiary.room.AppDatabase
 import java.io.IOException
@@ -21,7 +15,7 @@ suspend fun getSqlFromProject(context: Context, projectId: Int): String = corout
         context,
         AppDatabase::class.java,
         "DevDiaryDatabase"
-    ).allowMainThreadQueries().build().Dao()
+    ).allowMainThreadQueries().build().dao()
     var resultString = ""
 
     val tables = dao.getAllTables(projectId)

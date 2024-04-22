@@ -9,7 +9,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -60,7 +59,7 @@ fun DataBaseScreen(
     }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val dao by remember{ mutableStateOf(getDatabase(context = context).Dao()) }
+    val dao by remember{ mutableStateOf(getDatabase(context = context).dao()) }
     Column(
         modifier = Modifier.fillMaxWidth()
     ){

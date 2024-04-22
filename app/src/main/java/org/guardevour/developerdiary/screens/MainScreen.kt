@@ -2,7 +2,6 @@ package org.guardevour.developerdiary.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,12 +18,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,11 +27,11 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import org.guardevour.developerdiary.dialogs.DeleteDialog
 import org.guardevour.developerdiary.dialogs.NewProjectDialog
 import org.guardevour.developerdiary.room.getDatabase
-import kotlin.random.Random
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -45,12 +40,16 @@ fun MainScreen(
 ){
     val db = getDatabase(LocalContext.current)
 
-    val projects = db.Dao().getAllProjects().toMutableStateList()
+    val projects = db.dao().getAllProjects().toMutableStateList()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        Text(
+            text = "Special Thanks to GRizzi91 for a great library for reading PDF - bouquet",
+            fontSize = 8.sp
+        )
         Text(text = "Welcome!")
 
             LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp),
@@ -67,7 +66,8 @@ fun MainScreen(
                                     onLongClick = {
                                         isOpenedDeleteDialog.value = true
                                     }
-                                ).shadow(elevation = 4.dp, shape = RoundedCornerShape(11.dp))
+                                )
+                                .shadow(elevation = 4.dp, shape = RoundedCornerShape(11.dp))
                         )
                         if (isOpenedDeleteDialog.value){
                             DeleteDialog(value = isOpenedDeleteDialog, projects[index], projects[index].name){
