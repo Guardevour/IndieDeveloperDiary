@@ -5,9 +5,12 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import org.guardevour.developerdiary.room.entities.Domain
 import org.guardevour.developerdiary.room.entities.Field
+import org.guardevour.developerdiary.room.entities.Note
 import org.guardevour.developerdiary.room.entities.Project
 import org.guardevour.developerdiary.room.entities.Relation
+import org.guardevour.developerdiary.room.entities.Requirement
 import org.guardevour.developerdiary.room.entities.Table
 import org.guardevour.developerdiary.room.entities.Tag
 import org.guardevour.developerdiary.room.entities.Task
@@ -25,6 +28,15 @@ interface RoomDao {
 
     @Delete
     fun delete(tag: Tag)
+
+    @Delete
+    fun delete(note: Note)
+
+    @Delete
+    fun delete(domain: Domain)
+
+    @Delete
+    fun delete(requirement: Requirement)
 
     @Delete
     fun delete(relation: Relation)
@@ -58,6 +70,15 @@ interface RoomDao {
 
     @Update
     suspend fun save(tag: Tag)
+
+    @Update
+    suspend fun save(note: Note)
+
+    @Update
+    suspend fun save(domain: Domain)
+
+    @Update
+    suspend fun save(requirement: Requirement)
 
     @Query("Select max(uid) from project")
     fun getLastProject(): Int
@@ -104,13 +125,47 @@ interface RoomDao {
     @Query("Select * from task where project_id = :prId")
     fun getAllTasks(prId: Int): List<Task>
 
+    @Query("Select * from Note where project_name = :prId")
+    fun getAllNotes(prId: Int): List<Note>
+
+    @Query("Select * from requirement where domain_id = :domainId")
+    fun getAllRequirements(domainId: Int): List<Requirement>
+
+    @Query("Select * from domain where project_name = :prId")
+    fun getAllDomains(prId: Int): List<Domain>
+
     @Query("Select max(uid) from task")
     fun getLastTask(): Int
+
+    @Query("Select max(uid) from domain")
+    fun getLastDomain(): Int
+
+
+    @Query("Select max(uid) from requirement")
+    fun getLastRequirement(): Int
+
+
+    @Query("Select max(uid) from note")
+    fun getLastNote(): Int
+
 
     @Insert
     suspend fun addTask(task: Task)
 
     @Update
     fun complete(task: Task)
+
+    @Insert
+    fun insert(note: Note)
+
+    @Insert
+    fun insert(domain: Domain)
+
+    @Insert
+    fun insert(requirement: Requirement)
+
+
+
+
 
 }

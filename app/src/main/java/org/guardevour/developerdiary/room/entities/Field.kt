@@ -14,8 +14,8 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.twotone.Build
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,7 +34,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
@@ -89,16 +88,14 @@ data class Field(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
             modifier = modifier
-                .composed {
-                    modifier
-                }
+                .then(modifier)
                 .shadow(elevation = 6.dp, shape = RoundedCornerShape(11.dp))
                 .fillMaxWidth()
                 .height(70.dp)
         ) {
             stickyHeader{
                 val scope = rememberCoroutineScope()
-                Icon(Icons.Filled.AddCircle,
+                Icon(Icons.Filled.CheckCircle,
                     contentDescription = "",
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.background)

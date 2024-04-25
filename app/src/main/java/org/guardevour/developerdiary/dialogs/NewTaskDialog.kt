@@ -66,7 +66,7 @@ fun NewTaskDialog(value: MutableState<Boolean>,
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(32.dp)

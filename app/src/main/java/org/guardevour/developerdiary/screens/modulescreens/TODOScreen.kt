@@ -8,6 +8,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -54,7 +55,8 @@ fun TODOScreen(
     Column(verticalArrangement = Arrangement.SpaceBetween) {
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.padding(5.dp)
         ){
             item{
                 Text(text = "Tasks")
@@ -106,8 +108,8 @@ fun TODOScreen(
                 val isExpanded = remember {
                     mutableStateOf(false)
                 }
-                var isDeleted by remember{ mutableStateOf(true)}
-                AnimatedVisibility(visible = isDeleted) {
+                var isDeleted by remember{ mutableStateOf(false)}
+                AnimatedVisibility(visible = !isDeleted) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
@@ -126,7 +128,7 @@ fun TODOScreen(
                             isExpanded
                         )
                         IconButton(onClick = {
-                            isDeleted = false
+                            isDeleted = true
                             dao.delete(completedTasks[it])
                             completedTasks.remove(completedTasks[it])
                         }) {

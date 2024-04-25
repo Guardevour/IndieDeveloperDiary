@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import org.guardevour.developerdiary.screens.BiometricAuthenticationScreen
 import org.guardevour.developerdiary.screens.MainScreen
+import org.guardevour.developerdiary.screens.ProgramInfoScreen
 import org.guardevour.developerdiary.screens.ProjectInfoScreen
 import org.guardevour.developerdiary.screens.ProjectScreen
 import org.guardevour.developerdiary.ui.theme.DeveloperDiaryTheme
@@ -60,6 +61,9 @@ class MainActivity : FragmentActivity() {
                                        navController, backStackEntry.arguments?.getInt("projectId")!!
                                    )
                                }
+                                composable("main/info"){
+                                    ProgramInfoScreen()
+                                }
                                composable(
                                    "projectInfo/{projectId}",
                                    arguments = listOf(navArgument("projectId") {

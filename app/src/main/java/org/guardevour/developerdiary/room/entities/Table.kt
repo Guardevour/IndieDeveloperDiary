@@ -1,5 +1,6 @@
 package org.guardevour.developerdiary.room.entities
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -9,6 +10,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,7 +20,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -60,8 +63,9 @@ data class Table(
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     override fun Draw(modifier: Modifier) {
-        val fields = getDatabase(LocalContext.current).dao().getAllFields(uid).toMutableStateList()
-        val relations = getDatabase(LocalContext.current).dao().getAllRelations(
+        val context = LocalContext.current
+        val fields = getDatabase(context).dao().getAllFields(uid).toMutableStateList()
+        val relations = getDatabase(context).dao().getAllRelations(
             fields.map{
                 it.uid
             }.toIntArray()
@@ -69,7 +73,7 @@ data class Table(
         val isNewRelationDialogOpen = remember {
             mutableStateOf(false)
         }
-        Column(){
+        Column{
             Text(text = name)
             LazyColumn(
                 verticalArrangement = Arrangement.Top,
@@ -78,22 +82,21 @@ data class Table(
                     .height(300.dp)
             ) {
                 items(fields.size){index->
-                    val isDeleteDialogOpen = remember {
-                        mutableStateOf(false)
+
+                    Row(
+                        modifier = Modifier
+                            .padding(5.dp)
+                    ){
+                        IconButton(onClick = {
+                            getDatabase(context).dao().delete(fields[index])
+                        fields.remove(fields[index])
+                    }) {
+                        Icon(imageVector = Icons.Filled.Close, contentDescription = "")
                     }
-                    fields[index].Draw(modifier = Modifier
-                        .padding(5.dp)
-                        .combinedClickable(
-                            onClick = { },
-                            onLongClick = {
-                                isDeleteDialogOpen.value = true
-                            }
+                        fields[index].Draw(modifier = Modifier
                         )
-                    )
-                    if (isDeleteDialogOpen.value)
-                        DeleteDialog(value = isDeleteDialogOpen, entity = fields[index], name = "field", additionalOnClick = {
-                            fields.remove(fields[index])
-                        })
+                    }
+                    
                 }
                 item {
                     val dao = getDatabase(LocalContext.current).dao()
@@ -104,23 +107,35 @@ data class Table(
                         .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(12.dp))
                         .border(5.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(10.dp))
                         .clickable {
-                            val project = dao.getProjectByID(prName)
-                            val field = DataBaseFormats.DataBaseDataTypes[project.selectedDatabase]?.get(0)
-                                ?.let {
-                                    Field(
-                                        uid = dao.getLastField() + 1,
-                                        name = "",
-                                        length = if (it.isEnabledLength) 255 else null,
-                                        type = it.name,
-                                        tbName = uid,
-                                        isPrimaryKey = false,
-                                        additionalData = "not null"
-                                    )
+                            try {
+                                val project = dao.getProjectByID(prName)
+                                val field =
+                                    DataBaseFormats.DataBaseDataTypes[project.selectedDatabase]
+                                        ?.get(0)
+                                        ?.let {
+                                            Field(
+                                                uid = dao.getLastField() + 1,
+                                                name = "",
+                                                length = if (it.isEnabledLength) 255 else null,
+                                                type = it.name,
+                                                tbName = uid,
+                                                isPrimaryKey = false,
+                                                additionalData = "not null"
+                                            )
 
+                                        }
+                                field?.let {
+                                    dao.addField(field)
+                                    fields.add(field)
                                 }
-                            field?.let {
-                                dao.addField(field)
-                                fields.add(field)
+                            } catch (ex: Exception) {
+                                Toast
+                                    .makeText(
+                                        context,
+                                        "You should select DBMS to edit tables",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                    .show()
                             }
 
 
@@ -161,7 +176,7 @@ data class Table(
                         .clickable(
                             MutableInteractionSource(),
                             indication = null,
-                            onClick = { isNewRelationDialogOpen.value = true}
+                            onClick = { isNewRelationDialogOpen.value = true }
                         )
                     )
                     if (isNewRelationDialogOpen.value){
@@ -182,9 +197,7 @@ data class Table(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .height(100.dp)
-                .composed {
-                    modifier
-                }
+                .then(modifier)
                 .width(100.dp)
                 .padding(5.dp)
                 .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(12.dp))
@@ -206,9 +219,7 @@ data class Table(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .height(if (isExpanded.value) 150.dp else 100.dp)
-                .composed {
-                    modifier
-                }
+                .then(modifier)
                 .width(120.dp)
                 .padding(5.dp)
                 .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(12.dp))

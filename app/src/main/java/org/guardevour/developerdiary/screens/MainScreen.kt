@@ -6,6 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -14,7 +16,9 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +31,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import org.guardevour.developerdiary.dialogs.DeleteDialog
 import org.guardevour.developerdiary.dialogs.NewProjectDialog
@@ -46,10 +49,15 @@ fun MainScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            text = "Special Thanks to GRizzi91 for a great library for reading PDF - bouquet",
-            fontSize = 8.sp
-        )
+        Row(
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            IconButton(onClick = { navHostController.navigate("main/info")}) {
+                Icon(imageVector = Icons.Filled.Info, contentDescription = "")
+            }
+        }
+
         Text(text = "Welcome!")
 
             LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp),
@@ -76,6 +84,11 @@ fun MainScreen(
                         }
                     }
                 }
+
+
+
+
+
                 item {
                     val isOpenedAddDialog = remember { mutableStateOf(false) }
                     Icon(imageVector = Icons.Filled.Add, contentDescription = "", modifier = Modifier

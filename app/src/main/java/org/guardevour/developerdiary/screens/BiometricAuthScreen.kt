@@ -55,7 +55,7 @@ fun BiometricAuthenticationScreen(value: MutableState<Boolean>) {
             }
 
             val textInput = remember { mutableStateOf("")}
-
+            val circleColor = MaterialTheme.colorScheme.onSurface
             LazyRow(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
@@ -65,7 +65,7 @@ fun BiometricAuthenticationScreen(value: MutableState<Boolean>) {
                 items(4){index->
                     Canvas(modifier = Modifier.size(20.dp)) {
                         drawCircle(
-                            color = if (index-1 < textInput.value.lastIndex) Color.Cyan else Color.White
+                            color = if (index-1 < textInput.value.lastIndex) Color.Cyan else circleColor
                         )
                     }
                 }
