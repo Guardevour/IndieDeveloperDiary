@@ -83,21 +83,24 @@ fun DataBaseScreen(
 
         val tables = dao.getAllTables(projectId).toMutableStateList()
         val isNewTableDialogOpen = remember { mutableStateOf(false) }
-        AnimatedVisibility(visible = currentTable.intValue != -1 && isOpenedTable.value) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .height(550.dp)
-                    .padding(10.dp)
-            ) {
-                key(currentTable.intValue){
-                    tables[currentTable.intValue].Draw(modifier = Modifier)
+        key(currentTable.intValue) {
+            AnimatedVisibility(visible = currentTable.intValue != -1 && isOpenedTable.value) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .height(550.dp)
+                        .padding(10.dp)
+                ) {
+                    key(currentTable.intValue){
+                        tables[currentTable.intValue].DrawFull()
+                    }
+
                 }
 
             }
-
         }
+
         AnimatedVisibility(!isOpenedTable.value) {
             DataBaseVisualisationScreen(projectId = projectId)
         }
@@ -106,7 +109,7 @@ fun DataBaseScreen(
         ){
             items(tables.size){index->
                 val isOpenedDeleteDialog = remember { mutableStateOf(false) }
-                tables[index].DrawMin(modifier = Modifier.combinedClickable(
+                tables[index].Draw(modifier = Modifier.combinedClickable(
                     onClick = {
                         currentTable.intValue = index
                     },
@@ -117,6 +120,7 @@ fun DataBaseScreen(
                 )
                 if (isOpenedDeleteDialog.value){
                     DeleteDialog(value = isOpenedDeleteDialog, tables[index], tables[index].name){
+                        currentTable.intValue = -1
                         tables.remove(tables[index])
                     }
                 }

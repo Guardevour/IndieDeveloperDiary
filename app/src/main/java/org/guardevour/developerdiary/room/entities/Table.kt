@@ -62,7 +62,7 @@ data class Table(
 
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
-    override fun Draw(modifier: Modifier) {
+     fun DrawFull() {
         val context = LocalContext.current
         val fields = getDatabase(context).dao().getAllFields(uid).toMutableStateList()
         val relations = getDatabase(context).dao().getAllRelations(
@@ -89,14 +89,14 @@ data class Table(
                     ){
                         IconButton(onClick = {
                             getDatabase(context).dao().delete(fields[index])
-                        fields.remove(fields[index])
-                    }) {
-                        Icon(imageVector = Icons.Filled.Close, contentDescription = "")
-                    }
+                            fields.remove(fields[index])
+                        }) {
+                            Icon(imageVector = Icons.Filled.Close, contentDescription = "")
+                        }
                         fields[index].Draw(modifier = Modifier
                         )
                     }
-                    
+
                 }
                 item {
                     val dao = getDatabase(LocalContext.current).dao()
@@ -190,7 +190,7 @@ data class Table(
     }
 
     @Composable
-    fun DrawMin(modifier: Modifier = Modifier){
+    override fun Draw(modifier: Modifier){
 
         Column(
             verticalArrangement = Arrangement.Center,
