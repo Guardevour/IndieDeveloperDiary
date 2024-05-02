@@ -26,4 +26,8 @@ Indie Developer's Diary (IDevDi) is a Android program for managing your project 
 ## Roadmap
 ### Technical Specification Module
 - Rewrite viewing PDF to PDFRender, so there will be no need in <a href="https://github.com/GRizzi91/bouquet?tab=readme-ov-file"> bouquet library </a>
+- Save current PDF state in ViewModel to avoid possible long loading of TS (only with large files, that contains more than 40-50 pages)
+
+### Other 
+- Other quality of life features
   
